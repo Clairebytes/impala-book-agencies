@@ -18,6 +18,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
   overflow: auto;
+  /* Matches the hero/section backgrounds so mobile Safari's dynamic
+     toolbar (which makes 100vh taller than the visible viewport) never
+     exposes a stray white gap between sections. */
+  background-color: #14100d;
 }
 
 .wrapper {
@@ -246,6 +250,9 @@ body {
   position: relative;
   width: 100%;
   height: 100vh;
+  /* dvh accounts for mobile Safari's collapsing address bar, which makes
+     plain 100vh taller than the visible viewport and exposes a gap below. */
+  height: 100dvh;
   overflow: hidden;
   display: flex;
   justify-content: center;
