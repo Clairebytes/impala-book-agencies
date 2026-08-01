@@ -379,7 +379,7 @@ body {
   font-weight: 700;
   font-size: 1.6em;
   text-transform: none;
-  color: #d4af8c;
+  color: #c73650;
   padding: 0 4px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
@@ -417,7 +417,9 @@ body {
 
 /* Product Collection Section (below hero) */
 .products-section {
-  background: #14100d;
+  background:
+    radial-gradient(ellipse at top, rgba(199, 54, 80, 0.1), transparent 60%),
+    #14100d;
   padding: 90px 40px 100px;
   text-align: center;
 }
@@ -552,7 +554,7 @@ body {
 
 /* Package Section (centered, card-based) */
 .spotlight-section {
-  background: #4a4a34;
+  background: linear-gradient(135deg, #3d1f1e 0%, #5a2a28 100%);
   padding: 100px 40px 110px;
   text-align: center;
 }
@@ -660,6 +662,16 @@ body {
   margin-bottom: 10px;
 }
 
+/* Second package card picks up the red accent instead of gold, so the
+   pair reads as two distinct tiers rather than a repeated color. */
+.package-card:nth-child(2) .package-card__label {
+  color: #d9536b;
+}
+
+.package-card:nth-child(2):hover {
+  border-color: #d9536b;
+}
+
 .package-card h3 {
   font-family: 'Yeseva One', 'Cormorant Garamond', serif;
   font-weight: 400;
@@ -683,7 +695,7 @@ body {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(20, 16, 13, 0.55) 0%, rgba(20, 16, 13, 0.88) 55%, #14100d 100%),
+    linear-gradient(180deg, rgba(20, 16, 13, 0.55) 0%, rgba(38, 17, 20, 0.88) 55%, #14100d 100%),
     url('/images/image8.png');
   background-size: cover;
   background-position: center;
@@ -877,7 +889,7 @@ body {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(20, 16, 13, 0.55) 0%, rgba(20, 16, 13, 0.88) 55%, #14100d 100%),
+    linear-gradient(180deg, rgba(20, 16, 13, 0.55) 0%, rgba(38, 17, 20, 0.88) 55%, #14100d 100%),
     url('/images/image8.png');
   background-size: cover;
   background-position: center;
@@ -1018,7 +1030,9 @@ body {
 
 /* Footer */
 .footer {
-  background-color: #14100d;
+  background:
+    radial-gradient(ellipse at bottom, rgba(199, 54, 80, 0.1), transparent 60%),
+    #14100d;
   color: #e9e6dc;
   padding: 70px 40px 30px;
   width: 100%;
