@@ -35,7 +35,7 @@ export default function Footer() {
         </div>
       </div>
       <p className="copyright">
-        © 2025 The Impala Book Agencies. All rights reserved.
+        © 2026 The Impala Book Agencies. All rights reserved.
       </p>
     </footer>
   );

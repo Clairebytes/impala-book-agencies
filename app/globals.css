@@ -9,6 +9,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* iOS Safari's rubber-band overscroll reveals this, not body's —
+     without it, overscrolling past the top/bottom flashes white. */
+  background-color: #14100d;
 }
 
 /* General styles */
