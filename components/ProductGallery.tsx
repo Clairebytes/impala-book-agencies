@@ -6,7 +6,9 @@ export type GalleryItem = {
   alt: string;
   label: string;
   /** Shown on the card instead of the full label, since the category is already in the page heading. */
-  pages: number;
+  pages: number | string;
+  /** Unit shown after `pages`, e.g. "Pages" or "Sheets". Pass "" to show `pages` alone (e.g. a size code like "A4"). */
+  unit?: string;
   /** e.g. "Single Ruled" / "Square Ruled" — shown above the page count. */
   ruling: string;
   /** Query value sent to the order form; omit when the page has no per-item ordering yet. */
@@ -35,7 +37,10 @@ export default function ProductGallery({
             </div>
             <p className="gallery-card__label">
               <span className="gallery-card__ruling">{item.ruling}</span>
-              <span className="gallery-card__pages">{item.pages} Pages</span>
+              <span className="gallery-card__pages">
+                {item.pages}
+                {item.unit === "" ? "" : ` ${item.unit ?? "Pages"}`}
+              </span>
             </p>
             <Link
               href={item.product ? { pathname: "/order-form", query: { product: item.product } } : "/order-form"}

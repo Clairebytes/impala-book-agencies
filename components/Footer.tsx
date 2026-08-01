@@ -5,8 +5,10 @@ export default function Footer() {
         <div className="about reveal" id="about">
           <h3>About Us</h3>
           <p>
-            The Impala Book Agencies is a leading manufacturer of high-quality exercise books for
-            schools and businesses.
+            The Impala Book Agencies is a solutions-driven printing company with a history of
+            success connecting brands with consumers. While some companies simply provide
+            products, The Impala Book Agencies provides integrated solutions that deliver your
+            message, change perceptions and drive sales.
           </p>
         </div>
         <div className="contact reveal" id="contact">
@@ -24,14 +26,16 @@ export default function Footer() {
             </a>
           </p>
           <p>
-            <strong>Location:</strong> Mombasa Road, Nairobi - Kenya
+            <strong>Location:</strong> Impala Building, Ruai, Along Eastern Bypass, Behind Canan
+            House
+          </p>
+          <p>
+            <strong>P.O. Box:</strong> 60018-00200, Nairobi
           </p>
         </div>
       </div>
       <p className="copyright">
         © 2025 The Impala Book Agencies. All rights reserved.
-        <br />
-        Developed by <a href="mailto:clairewangondu@gmail.com">Claire</a>
       </p>
     </footer>
   );

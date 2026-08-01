@@ -1,33 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
 import Slideshow from "@/components/Slideshow";
+import ProductCard from "@/components/ProductCard";
+import { PRODUCTS } from "@/lib/products";
 
-const PRODUCTS = [
-  {
-    href: "/a4-single-lined",
-    img: "/images/products/a4-single-120.jpg",
-    alt: "Sapphire Brand A4 Single Ruled exercise book",
-    title: "A4 Single Lined",
-  },
-  {
-    href: "/a4-square-ruled",
-    img: "/images/products/a4-square-200.jpg",
-    alt: "Sapphire Brand A4 Square Ruled exercise book",
-    title: "A4 Square Ruled",
-  },
-  {
-    href: "/a5-single-lined",
-    img: "/images/products/a5-single-64.jpg",
-    alt: "Sapphire Brand A5 Single Ruled exercise book",
-    title: "A5 Single Lined",
-  },
-  {
-    href: "/a5-square-ruled",
-    img: "/images/products/a5-square-120.jpg",
-    alt: "Sapphire Brand A5 Square Ruled exercise book",
-    title: "A5 Square Ruled",
-  },
-];
+const FEATURED_PRODUCTS = PRODUCTS.filter((product) => product.featured);
 
 export default function Home() {
   return (
@@ -42,18 +17,14 @@ export default function Home() {
         </div>
 
         <div className="product-grid">
-          {PRODUCTS.map((product) => (
-            <div className="product-card reveal" key={product.href}>
-              <Link href={product.href} className="product-img-wrap">
-                <img src={product.img} alt={product.alt} />
-              </Link>
-              <h3>{product.title}</h3>
-              <Link href={product.href} className="learn-more-btn">
-                Shop Now
-              </Link>
-            </div>
+          {FEATURED_PRODUCTS.map((product) => (
+            <ProductCard product={product} key={product.href} />
           ))}
         </div>
+
+        <a href="/products" className="learn-more-btn products-view-all reveal">
+          View Full Collection
+        </a>
       </section>
 
       {/* Package Section */}

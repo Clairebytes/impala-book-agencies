@@ -11,6 +11,7 @@ const EMAILJS_TEMPLATE_ID = "template_zqm4qym";
 export default function OrderForm() {
   const searchParams = useSearchParams();
   const product = searchParams.get("product");
+  const isCustom = product === "Custom School Printed Books";
   const formRef = useRef<HTMLFormElement>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -20,6 +21,9 @@ export default function OrderForm() {
 
     setSubmitting(true);
     const formData = new FormData(formRef.current);
+    const notes = formData.get("message");
+    const photo = formData.get("photo");
+    const photoNote = photo instanceof File && photo.size > 0 ? " (reference photo attached via email)" : "";
 
     try {
       await Promise.all([
@@ -35,6 +39,7 @@ export default function OrderForm() {
             phone_number: formData.get("phone_number"),
             product: formData.get("product"),
             quantity: formData.get("quantity"),
+            notes: notes ? `${notes}${photoNote}` : photoNote || null,
           }),
         }).then((res) => {
           if (!res.ok) throw new Error("Failed to save order");
@@ -52,46 +57,65 @@ export default function OrderForm() {
 
   return (
     <div className="order-page">
-      <h1 className="page-title">{product ? `Order Your ${product}` : "Order Your Book"}</h1>
+      <div className="gallery-heading reveal">
+        <span className="eyebrow">Sapphire Brand Collection</span>
+        <h1>{product ? `Order Your ${product}` : "Order Your Book"}</h1>
+      </div>
 
-      <form ref={formRef} onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" name="name" required />
+      <div className="order-layout">
+        <form ref={formRef} onSubmit={handleSubmit} className="order-card reveal-left">
+          <div className="order-field">
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
 
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" required />
+          <div className="order-field">
+            <label htmlFor="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
 
-        <label htmlFor="phone_number">Phone Number:</label>
-        <input
-          type="text"
-          id="phone_number"
-          name="phone_number"
-          pattern="\d{10}"
-          title="Phone number must be exactly 10 digits"
-          required
-        />
+          <div className="order-field">
+            <label htmlFor="phone_number">Phone Number</label>
+            <input
+              type="text"
+              id="phone_number"
+              name="phone_number"
+              pattern="\d{10}"
+              title="Phone number must be exactly 10 digits"
+              required
+            />
+          </div>
 
-        <label htmlFor="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" min={1} required />
+          <div className="order-field">
+            <label htmlFor="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" min={1} required />
+          </div>
 
-        <input type="hidden" id="product" name="product" value={product ?? ""} />
+          {isCustom && (
+            <>
+              <div className="order-field">
+                <label htmlFor="message">Cover Details (optional)</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  placeholder="School name, crest text, colors, or any other details for the cover"
+                />
+              </div>
 
-        <button type="submit" className="order-btn" disabled={submitting}>
-          {submitting ? "Submitting…" : "Submit Order"}
-        </button>
-      </form>
+              <div className="order-field">
+                <label htmlFor="photo">Upload Photo / Logo (optional)</label>
+                <input type="file" id="photo" name="photo" accept="image/*" />
+              </div>
+            </>
+          )}
 
-      <div className="contact-info">
-        <h2>Contact Us</h2>
-        <p>
-          <strong>Phone:</strong> 0114 516 684
-        </p>
-        <p>
-          <strong>Email:</strong> theimpalabook@gmail.com
-        </p>
-        <p>
-          <strong>Location:</strong> Mombasa road ,Nairobi -Kenya
-        </p>
+          <input type="hidden" id="product" name="product" value={product ?? ""} />
+
+          <button type="submit" className="order-submit" disabled={submitting}>
+            {submitting ? "Submitting…" : "Submit Order"}
+          </button>
+        </form>
       </div>
     </div>
   );

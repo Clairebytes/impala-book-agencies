@@ -9,10 +9,17 @@ create table if not exists orders (
   phone_number text not null,
   product text not null,
   quantity integer not null,
+  notes text,
   status text not null default 'new' check (status in ('new', 'fulfilled')),
   fulfilled_at timestamptz,
   fulfilled_by uuid references auth.users(id)
 );
+
+-- Existing databases created before the "notes" column was added (used for
+-- the Custom School Printed Books enquiry's optional cover details) need it
+-- added explicitly, since `create table if not exists` above is a no-op once
+-- the table already exists.
+alter table orders add column if not exists notes text;
 
 create table if not exists activity_log (
   id uuid primary key default gen_random_uuid(),

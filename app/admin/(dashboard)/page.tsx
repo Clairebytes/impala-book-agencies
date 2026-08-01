@@ -53,6 +53,7 @@ export default async function AdminOrdersPage() {
                 <th>Phone</th>
                 <th>Product</th>
                 <th>Qty</th>
+                <th>Notes</th>
                 <th>Status</th>
                 <th></th>
               </tr>
@@ -69,6 +70,7 @@ export default async function AdminOrdersPage() {
                   <td>{order.phone_number}</td>
                   <td>{order.product || "—"}</td>
                   <td>{order.quantity}</td>
+                  <td style={{ maxWidth: 220 }}>{order.notes || "—"}</td>
                   <td>
                     <span className={`admin-badge admin-badge--${order.status}`}>
                       {order.status === "fulfilled" ? "Fulfilled" : "New"}
