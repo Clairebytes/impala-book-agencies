@@ -7,11 +7,46 @@
   box-sizing: border-box;
 }
 
+/* Light/dark theme tokens. The photo-backed hero and product-gallery pages
+   always use a dark scrim over the photo for text legibility regardless of
+   theme (standard practice for photographic heroes), so only the flat-
+   background chrome — product/package sections and the footer — reads
+   these variables. Dark is the default, matching the site's original look. */
+:root {
+  --bg: #14100d;
+  --text: #f5f0eb;
+  --text-soft: #d8d5c9;
+  --text-muted: #e9e6dc;
+  --gold: #d4af8c;
+  --footer-accent: #b7935f;
+  --green-bg: #4a4a34;
+  --red: #b23a4d;
+  --border-soft: rgba(233, 230, 220, 0.25);
+  --border-soft-2: rgba(233, 230, 220, 0.15);
+  --card-bg: rgba(0, 0, 0, 0.15);
+  --card-bg-hover: rgba(0, 0, 0, 0.25);
+}
+
+:root[data-theme="light"] {
+  --bg: #f6f1e7;
+  --text: #201a14;
+  --text-soft: #4a4032;
+  --text-muted: #4a4032;
+  --gold: #9c6f34;
+  --footer-accent: #8a6328;
+  --green-bg: #dcdcc4;
+  --red: #a12e40;
+  --border-soft: rgba(32, 26, 20, 0.15);
+  --border-soft-2: rgba(32, 26, 20, 0.1);
+  --card-bg: rgba(0, 0, 0, 0.04);
+  --card-bg-hover: rgba(0, 0, 0, 0.07);
+}
+
 html {
   scroll-behavior: smooth;
   /* iOS Safari's rubber-band overscroll reveals this, not body's —
      without it, overscrolling past the top/bottom flashes white. */
-  background-color: #14100d;
+  background-color: var(--bg);
 }
 
 /* General styles */
@@ -24,7 +59,7 @@ body {
   /* Matches the hero/section backgrounds so mobile Safari's dynamic
      toolbar (which makes 100vh taller than the visible viewport) never
      exposes a stray white gap between sections. */
-  background-color: #14100d;
+  background-color: var(--bg);
 }
 
 .wrapper {
@@ -77,6 +112,15 @@ body {
   text-transform: uppercase;
   color: #f5f0eb;
   white-space: nowrap;
+}
+
+/* Wraps nav-links + the theme/hamburger toggles so .navbar's
+   space-between only ever sees two top-level items (logo, this), keeping
+   the logo flush left and everything else flush right at any width. */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* Navigation Links */
@@ -149,6 +193,13 @@ body {
   transform: translateY(0);
 }
 
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
 /* Hamburger toggle — hidden on desktop, shown via the media query below */
 .navbar-toggle {
   display: none;
@@ -170,6 +221,30 @@ body {
   width: 100%;
   background: #f5f0eb;
   border-radius: 2px;
+}
+
+/* Light/dark toggle — sits in the nav, so it always renders against the
+   navbar's own fixed dark bar/scrim rather than the page's theme. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: 1px solid rgba(212, 175, 140, 0.5);
+  border-radius: 50%;
+  color: #d4af8c;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: #d4af8c;
+  color: #14100d;
 }
 
 @media (max-width: 860px) {
@@ -253,9 +328,13 @@ body {
   position: relative;
   width: 100%;
   height: 100vh;
-  /* dvh accounts for mobile Safari's collapsing address bar, which makes
-     plain 100vh taller than the visible viewport and exposes a gap below. */
+  /* lvh (large viewport height, i.e. address bar collapsed) is always >=
+     the currently visible viewport, so the hero can never fall short and
+     expose a gap below it — worst case is a few px of extra scroll before
+     the next section, never a visible seam. dvh alone still left a gap on
+     some devices right after navigation, before the toolbar state settled. */
   height: 100dvh;
+  height: 100lvh;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -379,7 +458,7 @@ body {
   font-weight: 700;
   font-size: 1.6em;
   text-transform: none;
-  color: #c73650;
+  color: #d4af8c;
   padding: 0 4px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
@@ -417,9 +496,7 @@ body {
 
 /* Product Collection Section (below hero) */
 .products-section {
-  background:
-    radial-gradient(ellipse at top, rgba(199, 54, 80, 0.1), transparent 60%),
-    #14100d;
+  background: var(--bg);
   padding: 90px 40px 100px;
   text-align: center;
 }
@@ -434,7 +511,7 @@ body {
   font-size: 12px;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: #d4af8c;
+  color: var(--gold);
   margin-bottom: 10px;
 }
 
@@ -444,7 +521,7 @@ body {
   font-size: clamp(2rem, 4vw, 3rem);
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #f5f0eb;
+  color: var(--text);
 }
 
 .product-grid {
@@ -505,7 +582,7 @@ body {
   font-size: 1.4rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #f5f0eb;
+  color: var(--text);
   margin-top: 22px;
 }
 
@@ -513,8 +590,8 @@ body {
   display: inline-block;
   margin-top: 12px;
   padding: 9px 22px;
-  border: 1px solid #d4af8c;
-  color: #d4af8c;
+  border: 1px solid var(--gold);
+  color: var(--gold);
   font-family: 'IBM Plex Serif', serif;
   font-size: 10px;
   letter-spacing: 2px;
@@ -525,8 +602,8 @@ body {
 }
 
 .learn-more-btn:hover {
-  background: #d4af8c;
-  color: #14100d;
+  background: var(--gold);
+  color: var(--bg);
   opacity: 1;
 }
 
@@ -554,7 +631,7 @@ body {
 
 /* Package Section (centered, card-based) */
 .spotlight-section {
-  background: linear-gradient(135deg, #3d1f1e 0%, #5a2a28 100%);
+  background: var(--green-bg);
   padding: 100px 40px 110px;
   text-align: center;
 }
@@ -570,7 +647,7 @@ body {
   font-size: 12px;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: #d4af8c;
+  color: var(--gold);
   margin-bottom: 14px;
 }
 
@@ -579,7 +656,7 @@ body {
   font-weight: 400;
   font-size: clamp(2rem, 3.5vw, 2.8rem);
   line-height: 1.2;
-  color: #f5f0eb;
+  color: var(--text);
   margin-bottom: 20px;
 }
 
@@ -587,7 +664,18 @@ body {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.1rem;
   line-height: 1.75;
-  color: #d8d5c9;
+  color: var(--text-soft);
+}
+
+/* Scoped rather than editing .included-list li directly, since that class
+   is shared with the custom-school-books page's always-dark photo backdrop
+   where the hardcoded light-on-dark colors below must stay fixed. */
+.spotlight-section .included-list li {
+  color: var(--text-muted);
+}
+
+.spotlight-section .included-list li::before {
+  color: var(--gold);
 }
 
 .included-list {
@@ -639,8 +727,8 @@ body {
 }
 
 .package-card {
-  background: rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(233, 230, 220, 0.25);
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
   padding: 40px 34px;
   text-align: left;
   transition: transform 0.35s ease, background 0.35s ease, border-color 0.35s ease;
@@ -648,8 +736,8 @@ body {
 
 .package-card:hover {
   transform: translateY(-6px);
-  background: rgba(0, 0, 0, 0.25);
-  border-color: #d4af8c;
+  background: var(--card-bg-hover);
+  border-color: var(--gold);
 }
 
 .package-card__label {
@@ -658,25 +746,23 @@ body {
   font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #d4af8c;
+  color: var(--gold);
   margin-bottom: 10px;
 }
 
-/* Second package card picks up the red accent instead of gold, so the
-   pair reads as two distinct tiers rather than a repeated color. */
+/* Second package card picks up a small red accent instead of gold, so the
+   pair reads as two distinct tiers rather than a repeated color. Kept to
+   just the label — the rest of the card stays on the gold/green/black
+   palette. */
 .package-card:nth-child(2) .package-card__label {
-  color: #d9536b;
-}
-
-.package-card:nth-child(2):hover {
-  border-color: #d9536b;
+  color: var(--red);
 }
 
 .package-card h3 {
   font-family: 'Yeseva One', 'Cormorant Garamond', serif;
   font-weight: 400;
   font-size: 1.7rem;
-  color: #f5f0eb;
+  color: var(--text);
   margin-bottom: 16px;
 }
 
@@ -684,7 +770,7 @@ body {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.02rem;
   line-height: 1.65;
-  color: #d8d5c9;
+  color: var(--text-soft);
   margin-bottom: 26px;
 }
 
@@ -695,7 +781,7 @@ body {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(20, 16, 13, 0.55) 0%, rgba(38, 17, 20, 0.88) 55%, #14100d 100%),
+    linear-gradient(180deg, rgba(20, 16, 13, 0.55) 0%, rgba(20, 16, 13, 0.88) 55%, #14100d 100%),
     url('/images/image8.png');
   background-size: cover;
   background-position: center;
@@ -889,7 +975,7 @@ body {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(20, 16, 13, 0.55) 0%, rgba(38, 17, 20, 0.88) 55%, #14100d 100%),
+    linear-gradient(180deg, rgba(20, 16, 13, 0.55) 0%, rgba(20, 16, 13, 0.88) 55%, #14100d 100%),
     url('/images/image8.png');
   background-size: cover;
   background-position: center;
@@ -1030,10 +1116,8 @@ body {
 
 /* Footer */
 .footer {
-  background:
-    radial-gradient(ellipse at bottom, rgba(199, 54, 80, 0.1), transparent 60%),
-    #14100d;
-  color: #e9e6dc;
+  background-color: var(--bg);
+  color: var(--text-muted);
   padding: 70px 40px 30px;
   width: 100%;
 }
@@ -1049,7 +1133,7 @@ body {
 
 .footer-content .contact {
   padding-left: 60px;
-  border-left: 1px solid rgba(233, 230, 220, 0.25);
+  border-left: 1px solid var(--border-soft);
 }
 
 .footer-content div {
@@ -1062,7 +1146,7 @@ body {
   font-size: 13px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #b7935f;
+  color: var(--footer-accent);
   margin-bottom: 16px;
 }
 
@@ -1071,11 +1155,11 @@ body {
   font-size: 1.05rem;
   line-height: 1.65;
   margin-bottom: 8px;
-  color: #e9e6dc;
+  color: var(--text-muted);
 }
 
 .footer .contact p strong {
-  color: #b7935f;
+  color: var(--footer-accent);
   font-weight: 500;
   margin-right: 4px;
 }
@@ -1083,14 +1167,14 @@ body {
 .copyright {
   margin-top: 50px;
   padding-top: 24px;
-  border-top: 1px solid rgba(233, 230, 220, 0.15);
+  border-top: 1px solid var(--border-soft-2);
   text-align: center;
   font-size: 0.85em;
   opacity: 0.7;
 }
 
 .copyright a {
-  color: #b7935f;
+  color: var(--footer-accent);
 }
 
 @media (max-width: 700px) {

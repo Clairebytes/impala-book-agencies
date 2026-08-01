@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 const PRODUCT_LINKS = [
   { href: "/a4-single-lined", label: "A4 Single Lined" },
@@ -44,56 +45,62 @@ export default function Navbar() {
       <div className="logo">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/logo.jpg" alt="The Impala Book Agencies Logo" />
-        <span className="logo-text">The Impala Book Agencies</span>
+        <span className="logo-text">The Impala Book Agencies Limited</span>
       </div>
 
-      <button
-        className="navbar-toggle"
-        onClick={() => setMenuOpen((open) => !open)}
-        aria-label="Toggle menu"
-        aria-expanded={menuOpen}
-      >
-        <span />
-        <span />
-        <span />
-      </button>
+      <div className="navbar-right">
+        <ul className={`nav-links${menuOpen ? " nav-links--open" : ""}`}>
+          <li>
+            <Link href="/" onClick={closeMenu}>
+              Home
+            </Link>
+          </li>
 
-      <ul className={`nav-links${menuOpen ? " nav-links--open" : ""}`}>
-        <li>
-          <Link href="/" onClick={closeMenu}>
-            Home
-          </Link>
-        </li>
-
-        <li className="dropdown">
-          <a href="#">Product ▾</a>
-          <ul className="dropdown-menu">
-            <li>
-              <Link href="/products" onClick={closeMenu}>
-                <strong>View Full Collection</strong>
-              </Link>
-            </li>
-            {PRODUCT_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} onClick={closeMenu}>
-                  {link.label}
+          <li className="dropdown">
+            <a href="#">Product ▾</a>
+            <ul className="dropdown-menu">
+              <li>
+                <Link href="/products" onClick={closeMenu}>
+                  <strong>View Full Collection</strong>
                 </Link>
               </li>
-            ))}
-          </ul>
-        </li>
+              {PRODUCT_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} onClick={closeMenu}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </li>
 
-        <li>
-          <a href="/#about" onClick={closeMenu}>
-            About Us
-          </a>
-        </li>
-        <li>
-          <a href="/#contact" onClick={closeMenu}>
-            Contact Us
-          </a>
-        </li>
-      </ul>
+          <li>
+            <a href="/#about" onClick={closeMenu}>
+              About Us
+            </a>
+          </li>
+          <li>
+            <a href="/#contact" onClick={closeMenu}>
+              Contact Us
+            </a>
+          </li>
+        </ul>
+
+        <div className="navbar-actions">
+          <ThemeToggle />
+
+          <button
+            className="navbar-toggle"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+      </div>
     </nav>
   );
 }

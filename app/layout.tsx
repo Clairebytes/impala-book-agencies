@@ -14,6 +14,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Runs before paint so a stored light-mode preference doesn't
+            flash the default dark theme first. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('theme')==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}",
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
