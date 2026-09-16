@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -16,9 +16,13 @@ export default function CustomSchoolBooksPage() {
 
       <div className="custom-school-content reveal">
         <div className="custom-school-content__img-wrap">
-          <img
+          <Image
             src="/images/products/custom-school-books.jpg"
             alt="Custom school-branded exercise books with school crests and details printed on the cover"
+            width={1600}
+            height={900}
+            sizes="(max-width: 900px) 90vw, 480px"
+            style={{ width: "100%", height: "auto" }}
           />
         </div>
 

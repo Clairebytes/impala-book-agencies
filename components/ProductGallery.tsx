@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import Link from "next/link";
 
 export type GalleryItem = {
@@ -33,7 +33,13 @@ export default function ProductGallery({
         {items.map((item) => (
           <div className="gallery-card reveal" key={item.src + item.label}>
             <div className="gallery-card__img-wrap">
-              <img src={item.src} alt={item.alt} />
+              <Image
+                src={item.src}
+                alt={item.alt}
+                fill
+                sizes="(max-width: 480px) 90vw, 320px"
+                style={{ objectFit: "cover" }}
+              />
             </div>
             <p className="gallery-card__label">
               <span className="gallery-card__ruling">{item.ruling}</span>

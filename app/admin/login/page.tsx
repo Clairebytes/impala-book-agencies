@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -39,8 +40,7 @@ export default function AdminLoginPage() {
     <div className="admin-auth-page">
       <form className="admin-auth-form" onSubmit={handleSubmit}>
         <div className="admin-auth-form__brand">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/logo.jpg" alt="The Impala Book Agencies" />
+          <Image src="/images/logo.jpg" alt="The Impala Book Agencies" width={100} height={100} priority />
           <span className="admin-auth-form__eyebrow">The Impala Book Agencies</span>
           <h1>Admin Sign In</h1>
         </div>

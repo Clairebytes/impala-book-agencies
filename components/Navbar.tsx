@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 
@@ -43,8 +44,7 @@ export default function Navbar() {
   return (
     <nav className={`navbar${scrolled ? " scrolled" : ""}`}>
       <div className="logo">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/logo.jpg" alt="The Impala Book Agencies Logo" />
+        <Image src="/images/logo.jpg" alt="The Impala Book Agencies Logo" width={100} height={100} priority />
         <span className="logo-text">The Impala Book Agencies Limited</span>
       </div>
 
